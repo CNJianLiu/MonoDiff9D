@@ -224,7 +224,7 @@ class DIFFUSION(nn.Module):
                     pose_s_emb_7 = self.denoise_s_net_FCAM7(pose_s_16) 
                     pred_delta_s = self.pose_s_decoder(pose_s_emb_7)
 
-                    pose_t_emb_init = self.pose_t_mlp(diff_t)
+                    pose_t_emb_init = self.pose_t_mlp(sample_t)
 
                     pose_t_emb_1 = self.denoise_t_net_FCAM1(torch.cat([condition_emb_init, pose_t_emb_init], dim=-1)) # (B,1,1408)
                     pose_t_emb_2 = self.denoise_t_net_FCAM2(pose_t_emb_1)
@@ -238,7 +238,7 @@ class DIFFUSION(nn.Module):
                     pose_t_emb_7 = self.denoise_t_net_FCAM7(pose_t_16) 
                     pred_delta_t = self.pose_t_decoder(pose_t_emb_7)
 
-                    pose_R_emb_init = self.pose_R_mlp(diff_R.reshape(b, 9))
+                    pose_R_emb_init = self.pose_R_mlp(sample_R.reshape(b, 9))
                     # pose_R_emb_init = self.pose_R_mlp(diff_R) # bs*6
                     
                     pose_R_emb_1 = self.denoise_R_net_FCAM1(torch.cat([condition_emb_init, pose_R_emb_init], dim=-1)) # (B,1,1408)
